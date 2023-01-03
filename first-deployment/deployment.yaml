@@ -15,3 +15,4 @@ spec:
       containers:
         - name: helloworld-go
           image: ghcr.io/joshdev-de/knative-exploration/hello-world:main
+          imagePullPolicy: Always
