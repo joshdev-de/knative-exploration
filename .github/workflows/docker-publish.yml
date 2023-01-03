@@ -46,32 +46,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           
-      # Setting up Docker Buildx with docker-container driver is required
-      # at the moment to be able to use a subdirectory with Git context
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      # Extract metadata (tags, labels) for Docker
-      # https://github.com/docker/metadata-action
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=ref,event=branch
-            type=sha
-
-      # Build and push Docker image with Buildx (don't push on PR)
-      # https://github.com/docker/build-push-action
-      - name: Build and push Docker image
+      - name: Build docker
         working-directory: ./functions/hello-world
-        id: build-and-push
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+        run: docker build . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
+      
+      - name: Push docker
+        working-directory: ./functions/hello-world
+        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
+      
