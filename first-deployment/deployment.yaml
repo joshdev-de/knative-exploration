@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
         - name: helloworld-go
-          image: docker.io/{username}/helloworld-go
+          image: ghcr.io/joshdev-de/knative-exploration/hello-world:main

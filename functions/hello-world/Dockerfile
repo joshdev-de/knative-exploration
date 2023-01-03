@@ -4,6 +4,6 @@ ENV COMMIT=${COMMIT}
 
 USER nonroot:nonroot
 
-COPY app /bin/scheduling-api
+COPY app /bin/app
 
-ENTRYPOINT [ "scheduling-api" ]
+ENTRYPOINT [ "app" ]
