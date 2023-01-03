@@ -27,4 +27,4 @@
  COPY --from=builder /app/app /app
 
  # Run the web service on container startup.
- CMD ["/helloworld"]
+ CMD ["/app"]
