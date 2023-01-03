@@ -1,8 +1,6 @@
-FROM gcr.io/distroless/static:nonroot
+FROM alpine:3
 ARG COMMIT
 ENV COMMIT=${COMMIT}
-
-USER nonroot:nonroot
 
 COPY app /app
 
