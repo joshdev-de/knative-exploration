@@ -4,6 +4,6 @@ ENV COMMIT=${COMMIT}
 
 USER nonroot:nonroot
 
-COPY app /bin/app
+COPY app /bin/hello-world
 
-ENTRYPOINT [ "app" ]
+ENTRYPOINT [ "hello-world" ]
