@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: event-display
+  namespace: knative-samples
+spec:
+  selector:
+    app: event-display
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
