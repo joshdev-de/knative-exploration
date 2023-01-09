@@ -1,4 +1,4 @@
-name: Build - Hello World
+name: Build - Send Hello
 
 on:
   schedule:
@@ -14,7 +14,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository }}/hello-world
+  IMAGE_NAME: ${{ github.repository }}/process-hello
 
 
 jobs:
@@ -43,10 +43,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Build docker
-        working-directory: ./functions/hello-world
+        working-directory: ./functions/process-hello
         run: docker build . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
       
       - name: Push docker
-        working-directory: ./functions/hello-world
+        working-directory: ./functions/process-hello
         run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
       
