@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: send-hello
   namespace: knative-samples
+  labels:
+    app: send-hello
 spec:
   replicas: 1
   selector:
