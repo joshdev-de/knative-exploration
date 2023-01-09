@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: send-hello
+  namespace: knative-samples
+  labels:
+    app: send-hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels: &labels
+      app: send-hello
+  template:
+    metadata:
+      labels: *labels
+    spec:
+      containers:
+        - name: send-hello
+          image: ghcr.io/joshdev-de/knative-exploration/send-hello:main
+          imagePullPolicy: Always

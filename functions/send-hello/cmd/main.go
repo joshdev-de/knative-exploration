@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	log.Print("helloworld: starting server...")
+	log.Print("Send Hello started")
 
 	h := handler.New()
 

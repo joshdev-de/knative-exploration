@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catch-hello
+  namespace: knative-samples
+  labels:
+    app: catch-hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels: &labels
+      app: catch-hello
+  template:
+    metadata:
+      labels: *labels
+    spec:
+      containers:
+        - name: send-hello
+          image: ghcr.io/joshdev-de/knative-exploration/catch-hello:main
+          imagePullPolicy: Always

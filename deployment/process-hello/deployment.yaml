@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: process-hello
+  namespace: knative-samples
+  labels:
+    app: process-hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels: &labels
+      app: process-hello
+  template:
+    metadata:
+      labels: *labels
+    spec:
+      containers:
+        - name: process-hello
+          image: ghcr.io/joshdev-de/knative-exploration/process-hello:main
+          imagePullPolicy: Always

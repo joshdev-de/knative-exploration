@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: process-hello
+  namespace: knative-samples
+spec:
+  selector:
+    app: process-hello
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080

@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	log.Print("Hello world sample started.")
+	log.Print("Process Hello started.")
 	c, err := cloudevents.NewClientHTTP()
 	if err != nil {
 		log.Fatalf("failed to create client, %v", err)

@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: catch-hello
+  namespace: knative-samples
+spec:
+  selector:
+    app: catch-hello
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
