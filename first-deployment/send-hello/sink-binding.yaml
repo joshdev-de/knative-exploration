@@ -1,0 +1,16 @@
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: send-hello
+spec:
+  subject:
+    apiVersion: apps/v1
+    kind: Deployment
+    selector:
+      matchLabels:
+        app: send-hello
+  sink:
+    ref:
+      apiVersion: eventing.knative.dev/v1
+      kind: Broker
+      name: default

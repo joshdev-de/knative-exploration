@@ -8,6 +8,7 @@ import (
 	"os"
 
 	cloudevents "github.com/cloudevents/sdk-go/v2"
+	"github.com/google/uuid"
 )
 
 type Handler interface {
@@ -37,7 +38,13 @@ func (h *handler) Handle(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Fprintf(w, "Hello %s!\n", target)
 
+	c, err := cloudevents.NewClientHTTP()
+	if err != nil {
+		log.Fatalf("failed to create client, %v", err)
+	}
+
 	event := cloudevents.NewEvent()
+	event.SetID(uuid.New().String())
 	event.SetSource("dev.knative.samples/helloworldsource")
 	event.SetType("dev.knative.samples.helloworld")
 	event.SetData(cloudevents.ApplicationJSON, map[string]string{"msg": "world"})
@@ -47,7 +54,7 @@ func (h *handler) Handle(w http.ResponseWriter, r *http.Request) {
 	ctx := cloudevents.ContextWithTarget(context.Background(), sink)
 
 	// Send that Event.
-	if result := h.client.Send(ctx, event); cloudevents.IsUndelivered(result) {
+	if result := c.Send(ctx, event); cloudevents.IsUndelivered(result) {
 		log.Fatalf("failed to send, %v", result)
 	}
 }
