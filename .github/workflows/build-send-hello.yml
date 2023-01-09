@@ -1,0 +1,52 @@
+name: Build - Send Hello
+
+on:
+  schedule:
+    - cron: '45 19 * * *'
+  push:
+    branches: [ "main" ]
+    # Publish semver tags as releases.
+    tags: [ 'v*.*.*' ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}/send-hello
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      # This is used to complete the identity challenge
+      # with sigstore/fulcio when running outside of PRs.
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Login against a Docker registry except on PR
+      # https://github.com/docker/login-action
+      - name: Log into registry ${{ env.REGISTRY }}
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Build docker
+        working-directory: ./functions/send-hello
+        run: docker build . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
+      
+      - name: Push docker
+        working-directory: ./functions/send-hello
+        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
+      
