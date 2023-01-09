@@ -50,6 +50,7 @@ func (h *handler) Handle(w http.ResponseWriter, r *http.Request) {
 	event.SetData(cloudevents.ApplicationJSON, map[string]string{"msg": "world"})
 
 	sink := os.Getenv("K_SINK")
+	fmt.Println(sink)
 
 	ctx := cloudevents.ContextWithTarget(context.Background(), sink)
 
