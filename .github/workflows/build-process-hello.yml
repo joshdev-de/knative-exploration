@@ -1,4 +1,4 @@
-name: Build - Send Hello
+name: Build - Process Hello
 
 on:
   schedule:
